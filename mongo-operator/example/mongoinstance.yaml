@@ -1,0 +1,8 @@
+apiVersion: mongo.miguelgarcia.dev/v1
+kind: MongoInstance
+metadata:
+  name: example-mongo-instance
+  namespace: default
+spec:
+  version: "8.0"
+  storageSize: "10Gi"
