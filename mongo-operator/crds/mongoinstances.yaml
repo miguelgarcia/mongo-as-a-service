@@ -14,10 +14,16 @@ spec:
           properties:
             spec:
               type: object
+              required:
+                - version
+                - storageSize
+                - credentialsSecret
               properties:
                 version:
                   type: string
                 storageSize:
+                  type: string
+                credentialsSecret:
                   type: string
             status:
               type: object

@@ -1,6 +1,9 @@
+"""
+Operator main entry point.
+"""
 import kopf
 import logging
-import kubernetes
+# Import all handlers so they get registered
 import handlers
 
 # Configure root logger
