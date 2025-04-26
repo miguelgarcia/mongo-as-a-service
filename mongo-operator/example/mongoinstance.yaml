@@ -5,8 +5,8 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  username: c3VwZXJhZG1pbg==    # base64 for "superadmin"
-  password: c3VwZXJwYXNz    # base64 for "superpass"
+  username: c3VwZXJhZG1pbg==
+  password: c3VwZXJwYXNz
 ---
 apiVersion: mongo.miguelgarcia.dev/v1
 kind: MongoInstance
@@ -14,6 +14,6 @@ metadata:
   name: example-mongo-instance2
   namespace: default
 spec:
-  version: "8.0"
+  version: "8.0.6"
   storageSize: "10Gi"
   credentialsSecret: example-mongo-instance2-credentials
