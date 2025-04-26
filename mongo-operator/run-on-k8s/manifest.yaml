@@ -66,4 +66,4 @@ spec:
       containers:
       - name: controller
         image: mongoinstance-operator:local
-        imagePullPolicy: Never
+        # imagePullPolicy: Never enable this line if you are using local image, like in microk8s
