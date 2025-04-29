@@ -1,5 +1,5 @@
 """
-Tests for API routes endpoints.
+Tests for API endpoints.
 """
 import pytest
 
