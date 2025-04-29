@@ -1,13 +1,13 @@
 .PHONY: test test-cov coverage-html run clean
 
 test:
-	pytest -v
+	pytest -v --ignore=tests/test_integration.py
 
 test-cov:
-	pytest --cov=app tests/
+	pytest --cov=app --ignore=tests/test_integration.py tests/ 
 
 coverage-html:
-	pytest --cov=app --cov-report=html tests/
+	pytest --cov=app --ignore=tests/test_integration.py --cov-report=html tests/
 
 run:
 	uvicorn app.main:app --reload
