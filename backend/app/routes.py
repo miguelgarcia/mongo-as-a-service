@@ -11,7 +11,7 @@ class Routes:
     def __init__(self, instances_service):
         self._instances_service = instances_service
         router = APIRouter(dependencies=[Depends(auth.get_api_key)])
-        router.post("/instances", response_model=serialization.MongoInstanceOut, status_code=201)(self.create_instance)
+        router.post("/instances", response_model=serialization.MongoInstanceCreateOut, status_code=201)(self.create_instance)
         router.get("/instances", response_model=list[serialization.MongoInstanceOut])(self.list_instances)
         router.get("/instances/{instance_id}", response_model=serialization.MongoInstanceOut)(self.get_instance)
         router.put("/instances/{instance_id}")(self.update_instance)

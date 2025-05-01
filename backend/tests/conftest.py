@@ -36,6 +36,12 @@ def mock_provisioner():
         async def deprovision_instance(self, instance):
             if instance_id in self.provisioned_instances:
                 self.provisioned_instances.remove(instance.id)
+
+        async def refresh_instance(self, instance):
+            # Simulate refreshing the instance
+            instance.status = "running"
+            instance.host = "localhost"
+            instance.port = 27017
     
     return MockProvisioner()
 

@@ -14,11 +14,13 @@ class MongoInstanceUpdate(BaseModel):
     host: str | None = None
     port: int | None = None
 
-class MongoInstanceOut(MongoInstanceCreate):
+class MongoInstanceOut(BaseModel):
     id: str
     name: str
     created_at: datetime
     status: str | None
     host: str | None
     port: int | None
+
+class MongoInstanceCreateOut(MongoInstanceOut):
     password: str | None = None

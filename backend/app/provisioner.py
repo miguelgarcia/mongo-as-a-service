@@ -63,3 +63,17 @@ class Provisioner:
             await secret.async_delete()
         if await k8s_resource.async_exists():
             await k8s_resource.async_delete()
+
+    async def refresh_instance(self, instance):
+        k8s_name = f"mongo-instance-{instance.id}"
+        k8s_namespace = "default"
+        k8s_resource = await MongoInstanceResource.async_get(
+            name=k8s_name,
+            namespace=k8s_namespace,
+        )
+        if not k8s_resource:
+            instance.status = "deleted"
+            return
+        instance.port = k8s_resource.status.get("port")
+        instance.host = ""
+        instance.status = "running" if k8s_resource.status.get("availableReplicas") == 1 else "provisioning"

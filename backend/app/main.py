@@ -35,5 +35,4 @@ def create_app(instances_service=None) -> FastAPI:
     app = FastAPI(title="Mongo as a Service", lifespan=lifespan)
     return app
 
-app = create_app()
 

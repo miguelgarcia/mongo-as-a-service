@@ -3,7 +3,7 @@ Business logic for managing instances.
 """
 from datetime import datetime, timezone
 from .model import MongoInstance
-from .serialization import MongoInstanceOut
+from .serialization import MongoInstanceCreateOut
 
 class InstancesService:
     def __init__(self, instances_repository, provisioner):
@@ -26,7 +26,7 @@ class InstancesService:
         # Generate a random root password
         root_password = MongoInstance.generate_password()
         await self._provisioner.provision_instance(instance, root_password)
-        return MongoInstanceOut(
+        return MongoInstanceCreateOut(
             id=instance.id,
             name=instance.name,
             created_at=instance.created_at,
@@ -38,6 +38,10 @@ class InstancesService:
 
     async def get_instance(self, instance_id: str):
         instance = await self._instances_repository.get_instance(instance_id)
+        # TODO(mike) instead of refreshing the instance here, we should let the operator update
+        # the status of the instance when there are changes
+        if instance:
+            await self._provisioner.refresh_instance(instance)
         return instance
 
     async def get_all_instances(self):

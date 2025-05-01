@@ -10,7 +10,7 @@ coverage-html:
 	pytest --cov=app --ignore=tests/test_integration.py --cov-report=html tests/
 
 run:
-	uvicorn app.main:app --reload
+	uvicorn app.main:create_app --reload
 
 clean:
 	rm -rf __pycache__
