@@ -19,6 +19,7 @@ class Routes:
         self.router = router
         
     async def create_instance(self, data: serialization.MongoInstanceCreate):
+        """Creates and provisions a new MongoDB instance with a random root password."""
         return await self._instances_service.create_instance(data.name)
 
     async def list_instances(self):
@@ -34,5 +35,8 @@ class Routes:
         return await self._instances_service.update_instance(instance_id, data.name)
 
     async def delete_instance(self, instance_id: str):
+        instance = await self._instances_service.get_instance(instance_id)
+        if not instance:
+            raise HTTPException(status_code=404, detail="Instance not found")
         await self._instances_service.delete_instance(instance_id)
 

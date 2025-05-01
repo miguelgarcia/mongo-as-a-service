@@ -8,13 +8,11 @@ from datetime import datetime
 class MongoInstanceCreate(BaseModel):
     name: str
 
-
 class MongoInstanceUpdate(BaseModel):
     name: str
     status: str | None = None
     host: str | None = None
     port: int | None = None
-
 
 class MongoInstanceOut(MongoInstanceCreate):
     id: str
@@ -23,3 +21,4 @@ class MongoInstanceOut(MongoInstanceCreate):
     status: str | None
     host: str | None
     port: int | None
+    password: str | None = None

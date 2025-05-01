@@ -4,20 +4,16 @@ Provides functions for creating, reading, updating, and deleting MongoDB instanc
 """
 from datetime import datetime
 from bson.objectid import ObjectId
-from pydantic import BaseModel
 from .model import MongoInstance
 
 class MongoInstancesRepository:
     def __init__(self, instances_collection):
         self._instances_collection = instances_collection
 
-    async def create_instance(self, name: str):
-        instance = {
-            "name": name,
-            "created_at": datetime.utcnow()
-        }
-        result = await self._instances_collection.insert_one(instance)
-        return MongoInstance.model_validate({**instance, "id": str(result.inserted_id)})
+    async def create_instance(self, instance: MongoInstance):
+        result = await self._instances_collection.insert_one(instance.model_dump())
+        instance.id = str(result.inserted_id)
+        return instance
 
     async def get_instance(self, instance_id: str):
         try:

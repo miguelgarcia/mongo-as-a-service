@@ -4,6 +4,7 @@
 
 * service layer [DONE]
 * Provisioner class [DOING]
+* BasicAuth for management API key for status updates from operator
 
 * black
 * typing

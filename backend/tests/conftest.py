@@ -11,7 +11,6 @@ from bson import ObjectId
 
 from app.repository import MongoInstancesRepository
 from app.services import InstancesService
-from app.provisioner import InstanceDetails
 
 @pytest.fixture
 def mock_mongo_collection():
@@ -31,12 +30,12 @@ def mock_provisioner():
         def __init__(self):
             self.provisioned_instances = []
 
-        async def provision_instance(self, instance_id):
-            self.provisioned_instances.append(instance_id)
+        async def provision_instance(self, instance, root_password):
+            self.provisioned_instances.append(instance.id)
 
-        async def deprovision_instance(self, instance_id):
+        async def deprovision_instance(self, instance):
             if instance_id in self.provisioned_instances:
-                self.provisioned_instances.remove(instance_id)
+                self.provisioned_instances.remove(instance.id)
     
     return MockProvisioner()
 

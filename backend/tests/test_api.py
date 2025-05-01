@@ -4,7 +4,7 @@ Tests for API endpoints.
 import pytest
 
 @pytest.mark.asyncio
-async def test_create_instance(app_client, api_key):
+async def test_create_instance(app_client, api_key, mock_provisioner):
     """Test creating an instance via the API."""
     async with app_client as ac:
         # Include API key in the headers - use the same key that was set in the environment
@@ -15,6 +15,9 @@ async def test_create_instance(app_client, api_key):
         assert data["name"] == "test-instance"
         assert "id" in data
         assert "created_at" in data
+        assert data["status"] == "provisioning"
+        assert mock_provisioner.provisioned_instances == [data["id"]]
+        assert data["password"] is not None
 
 @pytest.mark.asyncio
 async def test_list_instances_route(app_client, mock_instances_collection_with_data, api_key):

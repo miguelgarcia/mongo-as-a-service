@@ -1,7 +1,9 @@
 """
 Business logic for managing instances.
 """
+from datetime import datetime, timezone
 from .model import MongoInstance
+from .serialization import MongoInstanceOut
 
 class InstancesService:
     def __init__(self, instances_repository, provisioner):
@@ -9,15 +11,29 @@ class InstancesService:
         self._provisioner = provisioner
 
     async def create_instance(self, name: str):
-        instance = await self._instances_repository.create_instance(name)
-        await self._provisioner.provision_instance(instance.id)
-        return MongoInstance(
-            id=instance.id,
-            name=instance.name,
-            created_at=instance.created_at,
+        """
+        Creates and provisions a new MongoDB instance.
+        """
+        instance = MongoInstance(
+            id=None,
+            name=name,
+            created_at=datetime.now(tz=timezone.utc),
             status="provisioning",
             host=None,
             port=None,
+        )
+        await self._instances_repository.create_instance(instance)
+        # Generate a random root password
+        root_password = MongoInstance.generate_password()
+        await self._provisioner.provision_instance(instance, root_password)
+        return MongoInstanceOut(
+            id=instance.id,
+            name=instance.name,
+            created_at=instance.created_at,
+            status=instance.status,
+            host=instance.host,
+            port=instance.port,
+            password=root_password,
         )
 
     async def get_instance(self, instance_id: str):
@@ -33,7 +49,7 @@ class InstancesService:
     async def delete_instance(self, instance_id: str):
         instance = await self._instances_repository.get_instance(instance_id)
         if instance is None:
-            return None
-        await self._provisioner.deprovision_instance(instance_id)
-        return await self._instances_repository.delete_instance(instance_id)
+            raise ValueError(f"Instance with ID {instance_id} not found")
+        await self._provisioner.deprovision_instance(instance)
+        await self._instances_repository.delete_instance(instance_id)
 
