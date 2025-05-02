@@ -9,7 +9,7 @@ class MongoInstanceCreate(BaseModel):
     name: str
 
 class MongoInstanceUpdate(BaseModel):
-    name: str
+    name: str | None = None
     status: str | None = None
     host: str | None = None
     port: int | None = None

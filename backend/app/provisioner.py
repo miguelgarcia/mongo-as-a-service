@@ -13,6 +13,7 @@ MongoInstanceResource = new_class(
 
 class Provisioner:
     async def provision_instance(self, instance, root_password):
+        """Provisions a MongoDB instance in Kubernetes using the MongoInstance kind."""
         k8s_name = f"mongo-instance-{instance.id}"
         k8s_credentials = f"mongo-credentials-{instance.id}"
         k8s_namespace = "default"
@@ -33,7 +34,10 @@ class Provisioner:
         k8s_resource = MongoInstanceResource({
             "metadata": {
                 "name": k8s_name,
-                    "namespace": "default"
+                "namespace": "default",
+                "annotations": {
+                    "mongo-instance-id": instance.id
+                },
             },
             "spec": {
                 "storageSize": "5Gi",
@@ -44,6 +48,8 @@ class Provisioner:
         await k8s_resource.async_create()
 
     async def deprovision_instance(self, instance):
+        """Deprovisions a MongoDB instance in Kubernetes deleting the associated MongoInstance 
+        resource."""
         k8s_name = f"mongo-instance-{instance.id}"
         k8s_namespace = "default"
         k8s_credentials = f"mongo-credentials-{instance.id}"
@@ -63,17 +69,3 @@ class Provisioner:
             await secret.async_delete()
         if await k8s_resource.async_exists():
             await k8s_resource.async_delete()
-
-    async def refresh_instance(self, instance):
-        k8s_name = f"mongo-instance-{instance.id}"
-        k8s_namespace = "default"
-        k8s_resource = await MongoInstanceResource.async_get(
-            name=k8s_name,
-            namespace=k8s_namespace,
-        )
-        if not k8s_resource:
-            instance.status = "deleted"
-            return
-        instance.port = k8s_resource.status.get("port")
-        instance.host = ""
-        instance.status = "running" if k8s_resource.status.get("availableReplicas") == 1 else "provisioning"

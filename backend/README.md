@@ -1,15 +1,5 @@
 # Mongo as a Service (FastAPI)
 
-# TODO
-
-* service layer [DONE]
-* Provisioner class [DOING]
-* BasicAuth for management API key for status updates from operator
-
-* black
-* typing
-* mypy
-
 This is a FastAPI application that allows authenticated users to manage metadata for "MongoDB instances" using a simple REST API. The app stores instance data in MongoDB and secures endpoints using an API key.
 
 ---

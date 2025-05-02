@@ -31,8 +31,8 @@ class Routes:
             raise HTTPException(status_code=404, detail="Instance not found")
         return instance
 
-    async def update_instance(self, instance_id: str, data: serialization.MongoInstanceUpdate):
-        return await self._instances_service.update_instance(instance_id, data.name)
+    async def update_instance(self, instance_id: str, update: serialization.MongoInstanceUpdate):
+        return await self._instances_service.update_instance(instance_id, update)
 
     async def delete_instance(self, instance_id: str):
         instance = await self._instances_service.get_instance(instance_id)

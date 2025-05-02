@@ -38,17 +38,13 @@ class InstancesService:
 
     async def get_instance(self, instance_id: str):
         instance = await self._instances_repository.get_instance(instance_id)
-        # TODO(mike) instead of refreshing the instance here, we should let the operator update
-        # the status of the instance when there are changes
-        if instance:
-            await self._provisioner.refresh_instance(instance)
         return instance
 
     async def get_all_instances(self):
         return await self._instances_repository.get_all_instances()
 
-    async def update_instance(self, instance_id: str, name: str):
-        await self._instances_repository.update_instance(instance_id, name)
+    async def update_instance(self, instance_id: str, update):
+        await self._instances_repository.update_instance(instance_id, update)
 
     async def delete_instance(self, instance_id: str):
         instance = await self._instances_repository.get_instance(instance_id)
