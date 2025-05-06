@@ -1,0 +1,10 @@
+[project]
+name = "controller"
+version = "0.1.0"
+description = "MongoInstance operator controller"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "kopf==1.36.2",
+  "kr8s==0.20.6"
+]
