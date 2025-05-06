@@ -15,4 +15,4 @@ class MongoInstance(BaseModel):
     @classmethod
     def generate_password(cls, length=16):
         characters = string.ascii_letters + string.digits
-        return ''.join(secrets.choice(characters) for _ in range(length))
+        return "".join(secrets.choice(characters) for _ in range(length))

@@ -1,9 +1,11 @@
 """
 Business logic for managing instances.
 """
+
 from datetime import datetime, timezone
 from .model import MongoInstance
 from .serialization import MongoInstanceCreateOut
+
 
 class InstancesService:
     def __init__(self, instances_repository, provisioner):
@@ -52,4 +54,3 @@ class InstancesService:
             raise ValueError(f"Instance with ID {instance_id} not found")
         await self._provisioner.deprovision_instance(instance)
         await self._instances_repository.delete_instance(instance_id)
-

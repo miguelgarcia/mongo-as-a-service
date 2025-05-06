@@ -11,10 +11,12 @@ from .services import InstancesService
 from .provisioner import Provisioner
 from .routes import Routes
 
+
 def create_app(instances_service=None) -> FastAPI:
     """
     Create and configure the FastAPI application.
     """
+
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         nonlocal instances_service
@@ -22,7 +24,9 @@ def create_app(instances_service=None) -> FastAPI:
         try:
             if instances_service is None:
                 mongo_client, mongo_db = await connect()
-                instances_collection = mongo_db.get_collection(MONGO_INSTANCES_COLLECTION)
+                instances_collection = mongo_db.get_collection(
+                    MONGO_INSTANCES_COLLECTION
+                )
                 instances_repository = MongoInstancesRepository(instances_collection)
                 provisioner = Provisioner()
                 instances_service = InstancesService(instances_repository, provisioner)
@@ -32,7 +36,6 @@ def create_app(instances_service=None) -> FastAPI:
         finally:
             if mongo_client:
                 await mongo_client.close()
+
     app = FastAPI(title="Mongo as a Service", lifespan=lifespan)
     return app
-
-
