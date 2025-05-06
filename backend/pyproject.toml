@@ -1,0 +1,31 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Backend for the Mongo as a service project"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  {name = "Miguel Garcia"},
+]
+
+dependencies = [
+    "asgi-lifespan==2.1.0",
+    "pydantic==2.11.3",
+    "pytest==8.3.5",
+    "pytest-asyncio==0.26.0",
+    "pydantic==2.11.3",
+    "python-dotenv==1.1.0",
+    "fastapi==0.115.12",
+    "motor==3.7.0",
+    "kr8s==0.20.7",
+    "mongomock==4.3.0",
+    "mongomock-motor==0.0.35"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff==0.11.8",
+]
+
+[tool.uv]
+venv="venv"
