@@ -58,7 +58,7 @@ async def test_get_instance_not_found_route(app_client, api_key):
     """Test the get instance endpoint."""
     async with app_client as ac:
         headers = {"X-API-Key": api_key}
-        response = await ac.get(f"/instances/111", headers=headers)
+        response = await ac.get("/instances/111", headers=headers)
         assert response.status_code == 404
 
 

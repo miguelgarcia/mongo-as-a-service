@@ -3,7 +3,6 @@ CRUD operations module for Mongo as a Service.
 Provides functions for creating, reading, updating, and deleting MongoDB instances in the DB.
 """
 
-from datetime import datetime
 from bson.objectid import ObjectId
 from .model import MongoInstance
 

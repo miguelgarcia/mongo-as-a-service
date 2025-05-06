@@ -21,8 +21,3 @@ dependencies = [
     "mongomock==4.3.0",
     "mongomock-motor==0.0.35"
 ]
-
-[project.optional-dependencies]
-dev = [
-    "ruff==0.11.8",
-]
