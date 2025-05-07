@@ -24,7 +24,7 @@ supported).
 
 The demo shows how to invoke the backend API to create an instance, connect to it using mongosh and then delete it.
 
-[View demo](https://github.com/miguelgarcia/mongo-as-a-service/blob/main/demo.gif?raw=true)
+[View demo GIF](demo.gif)
 
 **Features**
 
