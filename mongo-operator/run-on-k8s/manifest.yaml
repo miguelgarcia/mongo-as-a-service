@@ -65,5 +65,5 @@ spec:
       serviceAccountName: mongoinstance-operator-account
       containers:
       - name: controller
-        image: mongoinstance-operator:local
-        # imagePullPolicy: Never enable this line if you are using local image, like in microk8s
+        image: my-mongo-operator:local
+        imagePullPolicy: Never # enable this line if you are using local image, like in microk8s

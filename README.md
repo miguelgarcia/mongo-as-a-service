@@ -20,6 +20,10 @@ backend API.
 For simplicity this project supports only MongoDB standalone instances (No replicas or HA are
 supported).
 
+**Demo**
+
+![Demo video](./demo.gif)
+
 **Features**
 
 * Create / Delete MongoDB instance.
