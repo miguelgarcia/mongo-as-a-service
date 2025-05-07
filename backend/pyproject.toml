@@ -19,5 +19,17 @@ dependencies = [
     "motor==3.7.0",
     "kr8s==0.20.7",
     "mongomock==4.3.0",
-    "mongomock-motor==0.0.35"
+    "mongomock-motor==0.0.35",
+    "uvicorn>=0.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.34.0",
+    "pytest-cov>=6.1.1",
+]
+
+[tool.poe.tasks]
+test = "pytest"
+test-cov = "pytest --cov=app tests/"
+app = "uvicorn app.main:create_app --reload"

@@ -23,23 +23,8 @@ This is a FastAPI application that allows authenticated users to manage metadata
 
 ## Running Locally
 
-**Create virtual environment**
-
 ```bash
-python -m venv venv
-source venv/bin/activate
-```
-
-**Install dependencies**
-
-```bash
-pip install -r requirements.txt
-```
-
-**Run app**
-
-```bash
-make run
+uv run poe app
 ```
 
 ---
@@ -51,32 +36,11 @@ The project includes comprehensive test coverage using pytest.
 **Run tests**
 
 ```bash
-make test
+uv run poe test
 ```
 
 **Run tests with coverage report**
 
 ```bash
-make test-cov
+uv run poe test-cov
 ```
-
-**Generate HTML coverage report**
-
-```bash
-make coverage-html
-```
-
-This will create a `htmlcov` directory with an HTML report of your test coverage.
-
----
-
-## Test Structure
-
-The test suite includes:
-
-- Unit tests for CRUD operations
-- Unit tests for API routes
-- Authentication tests
-- Integration tests for the API endpoints
-
-All tests use pytest fixtures to mock MongoDB and provide consistent test data.
