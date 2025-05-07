@@ -22,6 +22,8 @@ supported).
 
 **Demo**
 
+The demo shows how to invoke the backend API to create an instance, connect to it using mongosh and then delete it.
+
 ![](demo.gif)
 
 **Features**
