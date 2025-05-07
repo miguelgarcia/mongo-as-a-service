@@ -22,7 +22,7 @@ supported).
 
 **Demo**
 
-![Demo video](./demo.gif)
+![](demo.gif)
 
 **Features**
 
