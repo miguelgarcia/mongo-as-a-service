@@ -58,6 +58,7 @@ This will target the Kubernetes cluster that you have currently configured for y
 
 To enable the operator in a Kuberntes cluster execute the following steps:
 
-1. `kubectl apply -f crds/mongoinstances.yaml`
-2. `kubectl create namespace mongoinstance-operator`
-3. `kubectl apply -f run-on-k8s/manifest.yaml`
+1. Build and push the docker image from the `controller` directory
+2. `kubectl apply -f crds/mongoinstances.yaml`
+3. `kubectl create namespace mongoinstance-operator`
+4. `kubectl apply -f run-on-k8s/manifest.yaml` (Update the image field as needed)

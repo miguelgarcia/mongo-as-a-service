@@ -10,11 +10,12 @@ way
 
 **Components**:
 
-* Mongo kubernetes operator: Allows creating MongoDB instances from a single Kubernetes custom
-resource.
-* backend: Provides a HTTP API to manage mongo instances. Behind the scenes it interacts
+* `mongo-operator/`: Kubernetes operator that allows creating MongoDB instances from a single
+Kubernetes custom resource.
+* `backend/`: Provides a HTTP API to manage mongo instances. Behind the scenes it interacts
 with the Kubernetes cluster and MongoDB instances.
-* Kubernetes cluster: Hosts all components
+* `mongo-monitor/`: Monitors mongo instances in Kubernetes and tracks their status calling the
+backend API.
 
 For simplicity this project supports only MongoDB standalone instances (No replicas or HA are
 supported).
@@ -23,6 +24,4 @@ supported).
 
 * Create / Delete MongoDB instance.
 * List instances
-* Get instance connection details
-* View metrics: CPU, Disk, RAM
-
+* Get instance connection details (host and port)
