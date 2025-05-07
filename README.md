@@ -28,6 +28,6 @@ The demo shows how to invoke the backend API to create an instance, connect to i
 
 **Features**
 
-* Create / Delete MongoDB instance.
+* Create / Delete any number of MongoDB instances dynamically.
 * List instances
 * Get instance connection details (host and port)
