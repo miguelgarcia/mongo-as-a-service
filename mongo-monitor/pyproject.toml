@@ -1,0 +1,18 @@
+[project]
+name = "monitor"
+version = "0.1.0"
+description = "MongoInstance monitor"
+requires-python = ">=3.12"
+readme = "README.md"
+dependencies = [
+  "kr8s==0.20.6"
+]
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.34.0",
+]
+
+[tool.poe.tasks]
+run = "python main.py"
+lint = "uvx ruff check ."
