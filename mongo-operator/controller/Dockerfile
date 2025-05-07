@@ -13,4 +13,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 FROM base
 COPY --from=builder /app /app
 ENV PATH="/app/.venv/bin:$PATH"
-ENTRYPOINT ["python", "app/controller.py"]
+ENTRYPOINT ["uv", "run", "poe", "run"]

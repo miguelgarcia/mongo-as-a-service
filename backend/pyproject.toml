@@ -33,3 +33,4 @@ dev = [
 test = "pytest"
 test-cov = "pytest --cov=app tests/"
 app = "uvicorn app.main:create_app --reload"
+lint = "uvx ruff check ."

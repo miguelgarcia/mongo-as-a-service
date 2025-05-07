@@ -8,3 +8,12 @@ dependencies = [
   "kopf==1.36.2",
   "kr8s==0.20.6"
 ]
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.34.0",
+]
+
+[tool.poe.tasks]
+run = "python src/controller.py"
+lint = "uvx ruff check ."

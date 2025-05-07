@@ -49,8 +49,7 @@ You can connect using `mongosh 'mongodb://superadmin:superpass@${node_ip}:${port
 To run the controller locally, go to the `controller` directory and run:
 
 ```bash
-pip install -r requirements.txt
-python3 src/controller.py
+uv run poe run
 ```
 
 This will target the Kubernetes cluster that you have currently configured for your user.
