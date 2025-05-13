@@ -22,10 +22,12 @@ supported).
 
 **Demo**
 
-![Demo video](./demo.gif)
+The demo shows how to invoke the backend API to create an instance, connect to it using mongosh and then delete it.
+
+[View demo GIF](demo.gif)
 
 **Features**
 
-* Create / Delete MongoDB instance.
+* Create / Delete any number of MongoDB instances dynamically.
 * List instances
 * Get instance connection details (host and port)
