@@ -3,6 +3,7 @@ Business logic for managing instances.
 """
 
 from datetime import datetime, timezone
+from typing import AsyncGenerator
 from .model import MongoInstance
 from .serialization import MongoInstanceCreateOut
 
@@ -12,7 +13,7 @@ class InstancesService:
         self._instances_repository = instances_repository
         self._provisioner = provisioner
 
-    async def create_instance(self, name: str):
+    async def create_instance(self, name: str) -> MongoInstanceCreateOut:
         """
         Creates and provisions a new MongoDB instance.
         """
@@ -29,7 +30,7 @@ class InstancesService:
         root_password = MongoInstance.generate_password()
         await self._provisioner.provision_instance(instance, root_password)
         return MongoInstanceCreateOut(
-            id=instance.id,
+            id=str(instance.id),
             name=instance.name,
             created_at=instance.created_at,
             status=instance.status,
@@ -38,17 +39,17 @@ class InstancesService:
             password=root_password,
         )
 
-    async def get_instance(self, instance_id: str):
+    async def get_instance(self, instance_id: str) -> MongoInstance:
         instance = await self._instances_repository.get_instance(instance_id)
         return instance
 
-    async def get_all_instances(self):
+    async def get_all_instances(self) -> AsyncGenerator[MongoInstance, None]:
         return await self._instances_repository.get_all_instances()
 
-    async def update_instance(self, instance_id: str, update):
+    async def update_instance(self, instance_id: str, update) -> None:
         await self._instances_repository.update_instance(instance_id, update)
 
-    async def delete_instance(self, instance_id: str):
+    async def delete_instance(self, instance_id: str) -> None:
         instance = await self._instances_repository.get_instance(instance_id)
         if instance is None:
             raise ValueError(f"Instance with ID {instance_id} not found")

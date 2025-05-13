@@ -6,10 +6,11 @@ All routes are protected with API key authentication.
 
 from fastapi import APIRouter, Depends, HTTPException
 from . import auth, serialization
+from .services import InstancesService
 
 
 class Routes:
-    def __init__(self, instances_service):
+    def __init__(self, instances_service: InstancesService):
         self._instances_service = instances_service
         router = APIRouter(dependencies=[Depends(auth.get_api_key)])
         router.post(
@@ -27,25 +28,34 @@ class Routes:
         router.delete("/instances/{instance_id}", status_code=204)(self.delete_instance)
         self.router = router
 
-    async def create_instance(self, data: serialization.MongoInstanceCreate):
+    async def create_instance(self, data: serialization.MongoInstanceCreate) -> serialization.MongoInstanceCreateOut:
         """Creates and provisions a new MongoDB instance with a random root password."""
         return await self._instances_service.create_instance(data.name)
 
-    async def list_instances(self):
-        return [r async for r in await self._instances_service.get_all_instances()]
+    async def list_instances(self) -> list[serialization.MongoInstanceOut]:
+        """Returns a list of all MongoDB instances."""
+        return [serialization.MongoInstanceOut.model_validate(r.model_dump(), strict=False)
+                async for r in await self._instances_service.get_all_instances()]
 
-    async def get_instance(self, instance_id: str):
+    async def get_instance(self, instance_id: str) -> serialization.MongoInstanceOut:
+        """Returns a specific MongoDB instance by ID."""
         instance = await self._instances_service.get_instance(instance_id)
         if not instance:
             raise HTTPException(status_code=404, detail="Instance not found")
-        return instance
+        # Convert the instance to the output model
+        resp = serialization.MongoInstanceOut.model_validate(
+            instance.model_dump(), strict=False
+        )
+        return resp
 
     async def update_instance(
         self, instance_id: str, update: serialization.MongoInstanceUpdate
-    ):
-        return await self._instances_service.update_instance(instance_id, update)
+    ) -> None:
+        """Updates a specific MongoDB instance by ID."""
+        await self._instances_service.update_instance(instance_id, update)
 
-    async def delete_instance(self, instance_id: str):
+    async def delete_instance(self, instance_id: str) -> None:
+        """Deletes a specific MongoDB instance by ID."""
         instance = await self._instances_service.get_instance(instance_id)
         if not instance:
             raise HTTPException(status_code=404, detail="Instance not found")

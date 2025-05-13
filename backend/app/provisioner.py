@@ -3,6 +3,7 @@ in Kubernetes using the MongoInstance resource kind."""
 
 from base64 import b64encode
 from kr8s.objects import new_class, Secret
+from .model import MongoInstance
 
 MongoInstanceResource = new_class(
     kind="MongoInstance",
@@ -13,7 +14,8 @@ MongoInstanceResource = new_class(
 
 
 class Provisioner:
-    async def provision_instance(self, instance, root_password):
+    """Provisioner for MongoDB instances in Kubernetes using the MongoInstance resource kind."""
+    async def provision_instance(self, instance: MongoInstance, root_password: str) -> None:
         """Provisions a MongoDB instance in Kubernetes using the MongoInstance kind."""
         k8s_name = f"mongo-instance-{instance.id}"
         k8s_credentials = f"mongo-credentials-{instance.id}"
@@ -50,7 +52,7 @@ class Provisioner:
         )
         await k8s_resource.async_create()
 
-    async def deprovision_instance(self, instance):
+    async def deprovision_instance(self, instance: MongoInstance) -> None:
         """Deprovisions a MongoDB instance in Kubernetes deleting the associated MongoInstance
         resource."""
         k8s_name = f"mongo-instance-{instance.id}"

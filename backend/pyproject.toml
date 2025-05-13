@@ -25,6 +25,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "mypy>=1.15.0",
     "poethepoet>=0.34.0",
     "pytest-cov>=6.1.1",
 ]
@@ -34,3 +35,4 @@ test = "pytest"
 test-cov = "pytest --cov=app tests/"
 app = "uvicorn app.main:create_app --reload"
 lint = "uvx ruff check ."
+mypy = "mypy app"
