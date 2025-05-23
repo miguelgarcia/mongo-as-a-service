@@ -12,8 +12,12 @@ dependencies = [
 [dependency-groups]
 dev = [
     "poethepoet>=0.34.0",
+    "pytest>=8.3.5",
+    "pytest-kind>=22.11.1",
 ]
 
 [tool.poe.tasks]
 run = "python src/controller.py"
 lint = "uvx ruff check ."
+test-clean = "pytest -s"
+test = "pytest -s --keep-cluster"
