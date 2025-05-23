@@ -1,4 +1,5 @@
 import os
+import subprocess
 import pytest
 import time
 from collections.abc import Generator
@@ -27,6 +28,9 @@ def k8s_cluster(request) -> Generator[KindCluster, None, None]:
             time.sleep(1)
     # Configure CRDs
     kind_cluster.kubectl("apply", "-f", "../crds/mongoinstances.yaml")
+    # Load Docker images to minimize delay during tests
+    subprocess.check_output("docker pull mongo:8.0.6", shell=True)
+    kind_cluster.load_docker_image("mongo:8.0.6")
     yield kind_cluster
     del os.environ["KUBECONFIG"]
     if not request.config.getoption("keep_cluster"):  # pragma: no cover
