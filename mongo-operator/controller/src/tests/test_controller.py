@@ -17,11 +17,18 @@ def test_create_instance(k8s_cluster):
     with KopfRunner(['run', '-A', '--verbose', 'src/controller.py']) as runner:
         try:
             time.sleep(10)  # give it some time to react and to sleep and to retry
+            print("Creating MongoDB instance")
             k8s_cluster.kubectl("apply", "-f", "src/tests/instance.yaml")
-            time.sleep(10)  # give it some time to react and to sleep and to retry
+            time.sleep(10)
             # Check resources created
+            print("Checking resources created")
             pod = Pod.get(name="test-mongo-instance-0", namespace="default")
             assert pod is not None
+            for _ in range(36):  # 36 * 5 seconds = 180 seconds (3 minutes)
+                pod.refresh()
+                if pod.status.phase == "Running":
+                    break
+                time.sleep(5)
             assert pod.status.phase == "Running"
             instance = MongoInstanceResource.get(name="test-mongo-instance", namespace="default")
             assert instance is not None
